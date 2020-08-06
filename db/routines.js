@@ -21,7 +21,8 @@
 //select and return an array of public routines which have a specific activityId in their routine_activities join, include their activities
 
 
-//createRoutine
+//createRoutine - (added for git)
+
 //createRoutine({ creatorId, public, name, goal })
 //create and return the new routine
 
