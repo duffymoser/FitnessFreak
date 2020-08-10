@@ -11,3 +11,16 @@
 //  ...require('./routine_activities') // etc
 // }
 // Then we can just import into our server/API using require('./db'), etc, rather than importing from the separate files.
+
+
+
+//attempted to add bluebird here - I think some of my stack traces 
+//in Node aren't very helpful
+
+//const Promise = require('bluebird');
+//Promise.config({
+//    longStackTraces: true,
+//    warnings: true
+//})
+
+//that didnt seem to do anything - probably set up wrong
