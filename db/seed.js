@@ -7,6 +7,7 @@ const { createUser} = require('./users');
 const { client } = require('./client');
 const { createActivity } = require('./activities');
 const { createRoutine } = require('./routines');
+const { addActivityToRoutine } = require('./routineactivities')
 client.connect();
 
 // const { bluebird }= require('./index');
@@ -28,7 +29,6 @@ async function dropTables(){
             throw error;
         }
 }
-
 async function createTables(){
     try {
       console.log("Starting to build tables...");
@@ -69,11 +69,7 @@ async function createTables(){
       console.error("Error building tables!");
       throw error;
     }
-  }
-  
-
- 
-
+}
   async function createInitialUsers() {
     try {
       console.log("Starting to create users...");
@@ -104,9 +100,7 @@ async function createTables(){
       console.error("Error creating users!");
       throw error;
     }
-  }
-
-
+}
   async function createInitialActivities() {
     try {
       console.log("Starting to create activities...");
@@ -140,64 +134,133 @@ async function createTables(){
       console.error("Error creating activities!");
       throw error;
     }
+}
+async function createInitialRoutines() {
+  try {
+    console.log("Starting to create routines...");
+
+    await createRoutine({ 
+      creatorId: 1, 
+      public : true,
+      name: 'The Sloth',
+      goal: 'Continuity'
+    });
+    await createRoutine({ 
+      creatorId: 2, 
+      public : false,
+      name: 'The Lounger',
+      goal: 'Comfort'
+    }); 
+    await createRoutine({ 
+      creatorId: 1, 
+      public : false,
+      name: 'The Hubby',
+      goal: 'Conflict Avoidance'
+    }); 
+    await createRoutine({ 
+      creatorId: 3, 
+      public : true,
+      name: 'The Herbalist',
+      goal: 'Live to two hundred years'
+    }); 
+    await createRoutine({ 
+      creatorId: 4, 
+      public : true,
+      name: 'The Karen',
+      goal: 'Seeing your Manager'
+    }); 
+    await createRoutine({ 
+      creatorId: 5, 
+      public : true,
+      name: 'The Dripper',
+      goal: 'Perspire on all the equipment'
+    }); 
+    await createRoutine({ 
+      creatorId: 5, 
+      public : false,
+      name: 'The Cross-Trainer',
+      goal: `Show everyone how it's really done`
+    });
+    
+    console.log("Finished creating routines!");
+  } catch (error) {
+    console.error("Error creating routines!");
+    throw error;
   }
+}
+async function createInitialRoutineActivities() {
+  try {
+    console.log("Starting to create routine activities...");
 
+    await addActivityToRoutine({ 
+      routineId: 1, 
+      activityId : 1,
+      count: 1,
+      duration: 1
+    });
+   
+    await addActivityToRoutine({ 
+      routineId: 2, 
+      activityId : 1,
+      count: 1,
+      duration: 1
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 1, 
+      activityId : 2,
+      count: 1,
+      duration: 1
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 3, 
+      activityId : 1,
+      count: 4,
+      duration: 2
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 3, 
+      activityId : 2,
+      count: 3,
+      duration: 3
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 3, 
+      activityId : 3,
+      count: 4,
+      duration: 2
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 3, 
+      activityId : 4,
+      count: 2,
+      duration: 5
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 4, 
+      activityId : 4,
+      count: 1,
+      duration: 1
+    });
+    
+    await addActivityToRoutine({ 
+      routineId: 4, 
+      activityId : 3,
+      count: 1,
+      duration: 1
+    });
 
-
-  async function createInitialRoutines() {
-    try {
-      console.log("Starting to create routines...");
-  
-      await createRoutine({ 
-        creatorId: 1, 
-        public : true,
-        name: 'The Sloth',
-        goal: 'Continuity'
-      });
-      await createRoutine({ 
-        creatorId: 2, 
-        public : false,
-        name: 'The Lounger',
-        goal: 'Comfort'
-      }); 
-      await createRoutine({ 
-        creatorId: 1, 
-        public : false,
-        name: 'The Hubby',
-        goal: 'Conflict Avoidance'
-      }); 
-      await createRoutine({ 
-        creatorId: 3, 
-        public : true,
-        name: 'The Herbalist',
-        goal: 'Live to two hundred years'
-      }); 
-      await createRoutine({ 
-        creatorId: 4, 
-        public : true,
-        name: 'The Karen',
-        goal: 'Seeing your Manager'
-      }); 
-      await createRoutine({ 
-        creatorId: 5, 
-        public : true,
-        name: 'The Dripper',
-        goal: 'Perspire on all the equipment'
-      }); 
-      await createRoutine({ 
-        creatorId: 5, 
-        public : false,
-        name: 'The Cross-Trainer',
-        goal: `Show everyone how it's really done`
-      });
-      
-      console.log("Finished creating routines!");
-    } catch (error) {
-      console.error("Error creating routines!");
-      throw error;
-    }
+    console.log("Finished creating routine activities!");
+  } catch (error) {
+    console.error("Error creating routine activities!");
+    throw error;
   }
-
+}
 
   async function buildDB() {
     try {
@@ -206,14 +269,12 @@ async function createTables(){
       await createInitialUsers();
       await createInitialActivities();
       await createInitialRoutines();
+      await createInitialRoutineActivities();
     } catch (error) {
       console.log("Error during buildDB")
       throw error;
     }
-  }
-
-
-
+}
 
   buildDB()
   .catch(console.error)
