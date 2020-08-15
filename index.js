@@ -6,12 +6,14 @@ require('dotenv').config();
 const { PORT = 8080 } = process.env;
 const express = require('express');
 const server = express();
+const { JWT_SECRET } = process.env;
 
 
 //enable body parsing and jsonification
 
 const bodyParser = require('body-parser');
 server.use(bodyParser.json());
+server.use(express.urlencoded({ extended:true }));
 
 
 //morgan to make pretty logging text
@@ -29,8 +31,8 @@ server.use((req, res, next) => {
 
 //ship the request off to api to get routed
 
-const apirouter = require('./api');
-server.use('/api', apirouter);
+const apiRouter = require('./api');
+server.use('/api', apiRouter);
 
 //open a connection into postgres
 const { client } = require('./db/client');

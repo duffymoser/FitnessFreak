@@ -17,7 +17,11 @@ async function createUser({
         ON CONFLICT (username) DO NOTHING
         RETURNING *;
         `, [username, password]);
+        console.log("Test");
+        // client.end();
         return user;
+
+       
     } catch (error) {
         throw error;
     }
@@ -26,11 +30,9 @@ async function createUser({
 //Get User
 //getUser({ username, password })
 //this function will verify password - these will be kept plain for 
-//now - unhashed - this shoudl be a relatively easy transition
+//now - unhashed - this shoudl be a relatively easy transition - I think
 //it's sort of like translating, or coding/de-coding - at the 
 //end, if the same process is applied to both, it won't matter
-
-
 
 
 
