@@ -9,7 +9,6 @@ const { client } = require('./client');
 
 async function getPublicRoutines() {
     try {
-      console.log("Ouch");
       const { rows } = await client.query(`
         SELECT id, "creatorId", name, goal
         FROM routines WHERE public = true;
