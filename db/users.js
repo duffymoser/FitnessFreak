@@ -34,8 +34,28 @@ async function createUser({
 //it's sort of like translating, or coding/de-coding - at the 
 //end, if the same process is applied to both, it won't matter
 
-
+async function getUserByName(username) {
+    try {
+      const { rows: [ user ] } = await client.query(`
+        SELECT *
+        FROM users
+        WHERE username=$1
+      `, [ username ]);
+  
+      if (!user) {
+        throw {
+          name: "UserNotFoundError",
+          message: "A user with that username does not exist"
+        }
+      }
+  
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 module.exports = {
-    createUser
+    createUser,
+    getUserByName
 }

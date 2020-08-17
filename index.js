@@ -35,7 +35,7 @@ const apiRouter = require('./api');
 server.use('/api', apiRouter);
 
 //open a connection into postgres
-const { client } = require('./db/client');
+const { client } = require('./db');
 client.connect();
 
 //start our TCP listener - I think I would have to add dgram for udp - not sure

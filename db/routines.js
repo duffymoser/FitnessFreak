@@ -7,6 +7,18 @@ const { client } = require('./client');
 //getPublicRoutines
 //select and return an array of public routines, include their activities
 
+async function getPublicRoutines() {
+    try {
+      console.log("Ouch");
+      const { rows } = await client.query(`
+        SELECT id, "creatorId", name, goal
+        FROM routines WHERE public = true;
+      `);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 //getAllRoutinesByUser
 //getAllRoutinesByUser({ username })
@@ -22,8 +34,6 @@ const { client } = require('./client');
 //getPublicRoutinesByActivity({ activityId })
 //select and return an array of public routines which have a specific activityId in their routine_activities join, include their activities
 
-
-//createRoutine - (added for git)
 
 //createRoutine({ creatorId, public, name, goal })
 //create and return the new routine
@@ -64,5 +74,6 @@ async function createRoutine({
 
 
 module.exports = {
-    createRoutine
+    createRoutine,
+    getPublicRoutines
 }
